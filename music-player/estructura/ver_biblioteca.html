@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Estructura</title>
+</head>
+<body>
+<ol>
+    <li><a href="#" onclick="a()">Ver por fecha de adición</a></li>
+    <li><a href="#" onclick="b()">Ver por tílulo</a></li>
+    <li><a href="#" onclick="c()">Ver por artísta</a></li>
+    <li><a href="#" onclick="d()">Ver por género</a></li>
+    <li><a href="#" onclick="e()">Ver por álbum</a></li>
+    <li><a href="./biblioteca.html">Volver a Biblioteca</a></li>
+</ol>
+<h2>OJO: Todas estas listas deben ser listadas por su nombre de título y artista de los metadatos, en caso de que no tenga, ahí recién usamos el nombre del archivo y también los artistas/albumes/generos deben tener un número por si el usuario quiere reproducir todo el album/artista/género</h2>
+<h3>Ejemplo</h3>
+<pre>
+<p>
+    1. Drake<br/>
+        2. Fair Trade (with Travis Scott) - Drake <br/>
+        3. In the Bible - Drake<br/>
+    4. Unknown<br/>
+        5. y2mateDaddyYankee No metadatos.mp3<br/>
+    6 Mac DeMarco<br/>
+        7. Freaking Out The Neighborhood - Mac DeMarco<br/>
+</p>
+    <pre/>
+<script>
+    function a() {
+        alert("Listar por fecha o default");
+    }
+    function b() {
+        alert("Listar por título (alfabeticamente)");
+    }
+    function c() {
+        alert("Listar por artista (El artista debe tener un número al lado para poder reproducir toda la música del artista");
+    }
+    function d(){
+        alert("Listar por género (El género debe tener un número al lado para poder reproducir toda la música del artista");
+    }
+    function e(){
+        alert("Listar por álbum (El álbum debe tener un número al lado para poder reproducir toda la música del álbum");
+    }
+</script>
+</body>
+</html>

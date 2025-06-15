@@ -1,0 +1,343 @@
+/* Estilo general de la aplicación */
+.root {
+    -fx-background-color: #1c1c1c;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #ffffff;
+}
+
+/* Panel superior */
+.panel-superior {
+    -fx-padding: 5px;
+    -fx-background-color: #2b2828;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+}
+
+/* ListView */
+.list-view {
+    -fx-background-color: #0e0d0d;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-text-fill: #ffffff;
+    -fx-control-inner-background: #0e0d0d;
+}
+
+/* Celdas del ListView */
+.list-cell {
+    -fx-background-color: #0e0d0d;
+    -fx-text-fill: #ffffff;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: #000000;
+}
+
+/* Botones */
+.button {
+    -fx-background-color: #4a4a4a;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+}
+
+.button:hover {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: #000000;
+    -fx-cursor: hand;
+}
+
+/* Panel de botones */
+.botones-panel {
+    -fx-background-color: #2b2828;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-spacing: 30px;
+}
+
+/* Panel de controles de reproducción */
+.botones-control {
+    -fx-background-color: #2b2828;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-spacing: 30px;
+}
+
+/* Slider */
+.slider {
+    -fx-max-width: infinity;
+    -fx-pref-height: 16px; /* same as visible thickness */
+
+}
+
+.slider .track {
+    -fx-pref-height: 16px; /* same as visible thickness */
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.slider .thumb {
+    -fx-background-color: #00acc1;
+    -fx-pref-width: 16px;
+    -fx-pref-height: 16px;
+}
+
+.slider .thumb:hover {
+    -fx-background-color: #26c6da;
+    -fx-cursor: hand;
+}
+.progress-bar {
+    -fx-background-color: #ffffff; /* or dark for contrast */
+    -fx-control-inner-background: #ffffff; /* track color */
+}
+
+.progress-bar > .bar {
+    -fx-background-color: #26c6da; /* the green filled part */
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+.volume-slider {
+    -fx-background-color: #3a3a3a; /* or dark for contrast */
+    -fx-control-inner-background: #3a3a3a; /* track color */
+}
+.volume-slider .track {
+    -fx-background-color: #fff; /* or dark for contrast */
+    -fx-control-inner-background: #ffffff; /* track color */
+    -fx-pref-height: 4px; /* same as visible thickness */
+
+}
+.volume-slider .track .fill {
+     -fx-background-color: #fff; /* or dark for contrast */
+}
+
+.volume-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-pref-width: 40px; /* same as visible thickness */
+
+}
+
+.popup-volume {
+    -fx-background-color: #3a3a3a; /* or dark for contrast */
+    -fx-padding: 10px;
+    -fx-pref-width: 190px; /* same as visible thickness */
+
+}
+
+/* Contenedor inferior */
+.bottom-panel {
+    -fx-spacing: 10px;
+}
+
+/* Contenedor ventana información */
+.about-container {
+    -fx-padding: 10px;
+    -fx-background-color: #1c1c1c;
+    -fx-alignment: center;
+}
+
+/* Área de texto información */
+.about-text {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: #00acc1;
+    -fx-background-color: #000000;
+    -fx-border-color: #00acc1;
+    -fx-border-radius: 4px;
+    -fx-padding: 10px;
+    -fx-text-alignment: center;
+    -fx-control-inner-background: #000000;
+    -fx-pref-width: 100%;
+}
+
+/* Contenedor del álbum */
+.album-container {
+    -fx-background-color: #1c1c1c;
+    -fx-alignment: center;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+/* Portada del álbum */
+.album-cover {
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+    -fx-background-color: #0e0d0d;
+}
+
+/* Título de la canción */
+.song-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-background-color: #2b2828;
+    -fx-padding: 5px;
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+}
+
+.barra-busqueda {
+    -fx-background-color: #2b2828;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+    -fx-alignment: left;
+}
+
+/* Campo de búsqueda (TextField) */
+.text-field {
+    -fx-background-color: #0e0d0d;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #888888;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-padding: 8px;
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: left;
+}
+
+.text-field:focused {
+    -fx-background-color: #1c1c1c;
+    -fx-border-color: #26c6da;
+}
+
+/* ComboBox (Historial de búsquedas) */
+.combo-box {
+    -fx-background-color: #0e0d0d;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #0e0d0d;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: #000000;
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: #000000;
+}
+
+.combo-box:hover {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: #000000;
+    -fx-cursor: hand;
+}
+
+/* Estilo para el DialogPane del Alert */
+.alert-dialog {
+    -fx-background-color: #1c1c1c;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #ffffff;
+}
+
+/* Contenido del Alert */
+.alert-dialog .content {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+/* Título del Alert */
+.alert-dialog .header-panel {
+    -fx-background-color: #2b2828;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+    -fx-padding: 10px;
+}
+
+/* Botón del Alert (OK) */
+.alert-dialog .button {
+    -fx-background-color: #4a4a4a;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+}
+.alert-dialog .button:hover {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: #000000;
+    -fx-cursor: hand;
+}
+
+.alert-icon {
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+    -fx-background-color: #0e0d0d;
+    -fx-padding: 5px;
+}
+
+.uniform-button {
+    -fx-background-color: #2d2d2d;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #00acc1;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
+}
+
+/* Aplica el color de texto específicamente al texto dentro del MenuButton */
+.menu-button > .label {
+    -fx-text-fill: white;
+}
+
+.uniform-button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.uniform-button:pressed {
+    -fx-background-color: #1e1e1e;
+}
+.icono-eliminar {
+    -fx-fill: white;
+    -fx-font-size: 16px;
+}
+
+.button.eliminar {
+    -fx-background-color: #b30000;
+    -fx-text-fill: white;
+    -fx-padding: 6px 12px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-border-color: #800000;
+}
+
+.button.eliminar:hover {
+    -fx-background-color: #e60000;
+}
+
+.softcorp-button {
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
