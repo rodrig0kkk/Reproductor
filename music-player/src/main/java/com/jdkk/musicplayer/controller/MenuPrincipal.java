@@ -206,15 +206,17 @@ public class MenuPrincipal extends Application {
                 System.err.println("Error al cargar el icono de eliminar: " + e.getMessage());
             }
 
-            Button musicas = new Button("Músicas");
+           Button musicas = new Button("Músicas");
             Button artista = new Button("Artista");
             Button genero = new Button("Género");
             Button titulo = new Button("Título");
 
+            double buttonWidth1 = 90;
             double buttonWidth = 85;
-            musicas.setPrefWidth(buttonWidth);
+  
+             musicas.setMinWidth(100);
             artista.setPrefWidth(buttonWidth);
-            genero.setPrefWidth(buttonWidth);
+            genero.setPrefWidth(buttonWidth1);
             titulo.setPrefWidth(buttonWidth);
 
             HBox.setHgrow(musicas, Priority.NEVER);
@@ -242,8 +244,10 @@ public class MenuPrincipal extends Application {
 
             VBox panelIzquierdo = new VBox(10, botonesIzquierda, listView);
             panelIzquierdo.getStyleClass().add("panel-izquierdo");
-            panelIzquierdo.setMinWidth(432);
+            panelIzquierdo.setMinWidth(450);
+             panelIzquierdo.setMinHeight(10);
             VBox.setVgrow(listView, Priority.ALWAYS);
+
 
             btnEliminar.setOnAction(e -> {
                 int indiceSeleccionado = listView.getSelectionModel().getSelectedIndex();
