@@ -28,16 +28,13 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Collections;
 import java.util.Map;
-import java.util.Scanner;
 
-import javax.swing.JFileChooser;
 
 import java.util.HashMap;
 
 public class Biblioteca {
-    // private List<File> listaCanciones;
+   
     private Map<String, List<File>> cancionesPorGenero;
     private Map<String, List<File>> cancionesPorArtista;
 
@@ -72,7 +69,7 @@ public class Biblioteca {
         System.setErr(new PrintStream(new OutputStream() {
             @Override
             public void write(int b) {
-                // Ignorar logs de error
+              
             }
         }));
     }
@@ -80,9 +77,9 @@ public class Biblioteca {
     public void actualizarListaCanciones() {
         File[] archivos = musicDir.listFiles((dir, name) -> esFormatoValido(name));
 
-        listaCanciones.clear(); // Limpiar lista antes de actualizar
+        listaCanciones.clear(); 
         if (archivos != null) {
-            listaCanciones.addAll(Arrays.asList(archivos)); // Agregar nuevos archivos
+            listaCanciones.addAll(Arrays.asList(archivos)); 
         }
     }
 
@@ -427,7 +424,7 @@ public class Biblioteca {
     }
 
 
-    public void mostrarPlaylists() {
+     public void mostrarPlaylists() {
         limpiarListaTemporal();
 
         System.out.println(" -- LISTAS DE REPRODUCCIÓN -- ");
@@ -450,23 +447,6 @@ public class Biblioteca {
                 }
             }
             System.out.println("══════════════════════════════════════");
-        }
-        Scanner leer = new Scanner(System.in);
-        System.out.println("Elija la lista que desea reproducir ");
-        int seleccion = leer.nextInt();
-        leer.nextLine();
-
-        if (seleccion > 0 && seleccion <= playlist.size()) {
-            Lista listaSeleccionada = playlist.get(seleccion - 1);
-            System.out.println("Lista seleccionada: " + listaSeleccionada.nombre);
-            listaTemporal.clear();
-            for (String cancion : listaSeleccionada.nombreDeCancion) {
-                listaTemporal.add(new File(cancion));
-            }
-
-        } else {
-            System.out.println("Opción inválida.");
-        }
+        } 
     }
-
 }
