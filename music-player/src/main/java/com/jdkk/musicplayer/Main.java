@@ -8,7 +8,7 @@ public class Main {
             System.out.println("Reproductor iniciando");
             MenuPrincipal.launch(MenuPrincipal.class, args);
         } catch (Exception e) {
-            e.printStackTrace();  // <-- this will reveal if JavaFX crashes
+            e.printStackTrace();  
         }
     }
 }

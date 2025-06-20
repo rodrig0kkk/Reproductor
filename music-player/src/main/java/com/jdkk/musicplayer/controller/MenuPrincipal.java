@@ -25,7 +25,6 @@ import javafx.util.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.jdkk.musicplayer.controller.Utiles.showAlert;
 
 import java.io.File;
 import java.util.*;
@@ -42,7 +41,6 @@ import com.jdkk.musicplayer.model.ListaDeReproduccion;
 import com.jdkk.musicplayer.model.Playlist;
 import com.jdkk.musicplayer.view.AlbumCoverView;
 import com.jdkk.musicplayer.view.ButtonPlayer;
-import com.jdkk.musicplayer.view.Prints;
 
 public class MenuPrincipal extends Application {
     private static final String MUSIC_DIRECTORY = System.getProperty("user.home") + "/Music/";
@@ -89,9 +87,7 @@ public class MenuPrincipal extends Application {
     public void start(Stage primaryStage) {
         try {
             System.out.println("Iniciando la interfaz...");
-            primaryStage.setTitle("Softcorp Music Player");
-            Image icon = new Image(getClass().getResourceAsStream("/images/icono.png"));
-            primaryStage.getIcons().add(icon);
+            primaryStage.setTitle("Reproductor musical");
 
             Slider timelineSlider = new Slider();
             timelineSlider.setMin(0);
@@ -164,9 +160,7 @@ public class MenuPrincipal extends Application {
                                 File selectedSong = biblioteca.getListaCanciones().get(originalIndex);
                                 List<File> queue = reproductor.getListaActual();
                                 queue.add(selectedSong);
-                                Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Canción añadida",
-                                        "La canción '" + selectedSong.getName() + "' se ha añadido a la cola.");
-                            }
+                           }
                         });
 
                         if (indicesMap.get(getIndex()) != null && indicesMap.get(getIndex()) != -1) {
@@ -215,10 +209,12 @@ public class MenuPrincipal extends Application {
             Button genero = new Button("Género");
             Button titulo = new Button("Título");
 
+            double buttonWidth1 = 90;
             double buttonWidth = 85;
-            musicas.setPrefWidth(buttonWidth);
+  
+             musicas.setMinWidth(100);
             artista.setPrefWidth(buttonWidth);
-            genero.setPrefWidth(buttonWidth);
+            genero.setPrefWidth(buttonWidth1);
             titulo.setPrefWidth(buttonWidth);
 
             HBox.setHgrow(musicas, Priority.NEVER);
@@ -246,7 +242,8 @@ public class MenuPrincipal extends Application {
 
             VBox panelIzquierdo = new VBox(10, botonesIzquierda, listView);
             panelIzquierdo.getStyleClass().add("panel-izquierdo");
-            panelIzquierdo.setMinWidth(432);
+            panelIzquierdo.setMinWidth(450);
+             panelIzquierdo.setMinHeight(10);
             VBox.setVgrow(listView, Priority.ALWAYS);
 
             btnEliminar.setOnAction(e -> {
@@ -258,17 +255,10 @@ public class MenuPrincipal extends Application {
                     biblioteca.guardarListaCancionesJson("lista_canciones.json");
                     biblioteca.cargarListaCancionesJson("lista_canciones.json");
                     cargarCancionesPorTitulo(cancionesObservableList, indicesMap);
-                    Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Eliminar Cancion",
-                            "Cancion eliminada correctamente");
-                } else {
-                    Utiles.showAlert(Alert.AlertType.WARNING, "Ninguna canción seleccionada",
-                            "Por favor, selecciona una canción para eliminar.");
+                   
                 }
             });
-
-            FontIcon icon1 = new FontIcon(FontAwesomeSolid.LIST);
-
-            Button reproduccion = new Button("reproduccion");
+           
             Button pausa = listButtonPlayers.getFirst().getButtonPlayer();
             Button siguiente = listButtonPlayers.get(1).getButtonPlayer();
             Button anterior = listButtonPlayers.get(2).getButtonPlayer();
@@ -362,10 +352,8 @@ public class MenuPrincipal extends Application {
                     buscador.agregarHistorial(query);
                     actualizarHistorial(historialBusquedas);
                     List<File> resultados = buscador.buscarMetadatos(query);
-                    if (resultados.isEmpty()) {
-                        Utiles.showAlert(Alert.AlertType.WARNING, "Búsqueda sin resultados",
-                                "Ups, no se encontraron coincidencias.");
-                    } else {
+                    if (!resultados.isEmpty()) {
+                      
                         mostrarResultadosBusqueda(resultados, cancionesObservableList, indicesMap);
                     }
                 } else {
@@ -381,10 +369,8 @@ public class MenuPrincipal extends Application {
                     actualizarHistorial(historialBusquedas);
                     buscarField.setText(selected);
                     List<File> resultados = buscador.buscarMetadatos(selected);
-                    if (resultados.isEmpty()) {
-                        Utiles.showAlert(Alert.AlertType.WARNING, "Búsqueda sin resultados",
-                                "Ups, no se encontraron coincidencias.");
-                    } else {
+                    if (!resultados.isEmpty()) {
+                      
                         mostrarResultadosBusqueda(resultados, cancionesObservableList, indicesMap);
                     }
                 }
@@ -394,70 +380,6 @@ public class MenuPrincipal extends Application {
             barraBusqueda.getStyleClass().add("barra-busqueda");
             HBox.setHgrow(buscarField, Priority.ALWAYS);
             HBox.setHgrow(historialBusquedas, Priority.ALWAYS);
-
-            ImageView imageView;
-            try {
-                imageView = new ImageView(new Image(getClass().getResourceAsStream("/icons/logo.png")));
-                imageView.setPreserveRatio(true);
-                imageView.setFitHeight(52);
-            } catch (Exception e) {
-                Logger.getLogger("SoftcorpButton").log(Level.SEVERE, "Error al cargar la imagen del logo", e);
-                imageView = new ImageView();
-            }
-
-            Button infoSoftcorp = new Button();
-            infoSoftcorp.setGraphic(imageView);
-            infoSoftcorp.setStyle("-fx-background-color: transparent; -fx-border-width: 0; -fx-padding: 0;");
-            infoSoftcorp.getStyleClass().add("softcorp-button");
-
-            infoSoftcorp.setOnAction(event -> {
-                try {
-                    Stage aboutStage = new Stage();
-                    aboutStage.initModality(Modality.APPLICATION_MODAL);
-                    aboutStage.setTitle("Acerca de SOFTCORP Music");
-                    Image windowIcon = new Image(getClass().getResourceAsStream("/images/icono.png"));
-                    aboutStage.getIcons().add(windowIcon);
-
-                    TextArea aboutText = new TextArea();
-                    aboutText.setEditable(false);
-                    aboutText.setWrapText(true);
-                    aboutText.getStyleClass().add("about-text");
-                    aboutText.setText(
-                            "SOFTCORP Music-Player\n\n" +
-                                    "Versión: 1.0.0\n" +
-                                    "Desarrollado por: SOFTCORP\n" +
-                                    "Descripción: SOFTCORP Music-Player es un reproductor de música innovador diseñado para ofrecer una experiencia auditiva excepcional."
-                                    +
-                                    " Con una interfaz intuitiva y funciones avanzadas, permite organizar, reproducir y descubrir música con facilidad, brindando soporte"
-                                    +
-                                    " para múltiples formatos de audio y listas de reproducción personalizadas.\n\n" +
-                                    "Características:\n" +
-                                    "- Reproducción de alta calidad en formatos MP3, WAV y FLAC\n" +
-                                    "- Creación y gestión de listas de reproducción dinámicas\n\n" +
-                                    "Contacto:\n" +
-                                    "Correo: softcorp_mttp@gmail.com\n\n" +
-                                    "© 2025 SOFTCORP. Todos los derechos reservados.");
-
-                    aboutText.setPrefRowCount(12);
-                    aboutText.setPrefColumnCount(40);
-                    aboutText.setMaxHeight(aboutText.getPrefRowCount() * 40);
-                    VBox aboutLayout = new VBox(10);
-                    VBox.setVgrow(aboutText, Priority.ALWAYS);
-                    aboutText.setWrapText(true);
-                    aboutText.setPrefWidth(Region.USE_COMPUTED_SIZE);
-                    aboutText.setMaxWidth(Double.MAX_VALUE);
-
-                    aboutLayout.getChildren().add(aboutText);
-                    aboutLayout.getStyleClass().add("about-container");
-
-                    Scene aboutScene = new Scene(aboutLayout, 500, 290);
-                    aboutScene.getStylesheets().add(getClass().getResource("/css/estilo.css").toExternalForm());
-                    aboutStage.setScene(aboutScene);
-                    Platform.runLater(() -> aboutStage.show());
-                } catch (Exception e) {
-                    Logger.getLogger("SoftcorpButton").log(Level.SEVERE, "Error al crear la ventana de información", e);
-                }
-            });
 
             MenuButton menuAnadirCancion = new MenuButton("Añadir Canción");
             MenuItem itemArchivos = new MenuItem("Sel.. archivos");
@@ -472,8 +394,7 @@ public class MenuPrincipal extends Application {
                 biblioteca.guardarListaCancionesJson("lista_canciones.json");
                 biblioteca.cargarListaCancionesJson("lista_canciones.json");
                 cargarCancionesPorTitulo(cancionesObservableList, indicesMap);
-                Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Canciones Agregadas",
-                        "Canciones agregadas correctamente");
+             
             });
 
             itemCarpeta.setOnAction(e -> {
@@ -481,8 +402,7 @@ public class MenuPrincipal extends Application {
                 biblioteca.guardarListaCancionesJson("lista_canciones.json");
                 biblioteca.cargarListaCancionesJson("lista_canciones.json");
                 cargarCancionesPorTitulo(cancionesObservableList, indicesMap);
-                Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Canciones Agregadas",
-                        "Canciones agregadas correctamente");
+              
             });
 
             Button crearPlaylist = new Button("Playlist");
@@ -493,10 +413,9 @@ public class MenuPrincipal extends Application {
                 nuevaVentana().show();
             });
 
-            panelSuperior.getChildren().addAll(menuAnadirCancion, crearPlaylist, barraBusqueda, infoSoftcorp);
+            panelSuperior.getChildren().addAll(menuAnadirCancion, crearPlaylist, barraBusqueda);
             HBox.setHgrow(crearPlaylist, Priority.ALWAYS);
             HBox.setHgrow(barraBusqueda, Priority.ALWAYS);
-            HBox.setHgrow(infoSoftcorp, Priority.ALWAYS);
 
             BorderPane root = new BorderPane();
             root.getStyleClass().add("root");
@@ -579,7 +498,7 @@ public class MenuPrincipal extends Application {
                 }
             });
 
-            Scene scene = new Scene(root, 990, 620);
+            Scene scene = new Scene(root, 1080, 620);
             scene.getStylesheets().add(getClass().getResource("/css/estilo.css").toExternalForm());
 
             primaryStage.setScene(scene);
@@ -587,11 +506,9 @@ public class MenuPrincipal extends Application {
 
             albumCover.updateCover(reproductor.getMediaPlayer());
 
-            new Thread(this::mostrarMenu).start();
         } catch (Exception e) {
             e.printStackTrace();
-            Utiles.showAlert(Alert.AlertType.ERROR, "Startup Error",
-                    "An error occurred while starting the app:\n" + e.getMessage());
+           
         }
     }
 
@@ -650,8 +567,7 @@ public class MenuPrincipal extends Application {
                             File removedSong = listaCanciones.get(selectedIndex);
                             listaCanciones.remove(selectedIndex);
                             colaCanciones.remove(selectedIndex);
-                            Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Canción eliminada",
-                                    "La canción '" + removedSong.getName() + "' se ha eliminado de la cola.");
+                          
                         }
                     });
 
@@ -756,13 +672,8 @@ public class MenuPrincipal extends Application {
                 String nombre = nameInput.getText().trim();
                 if (!nombre.isEmpty()) {
                     biblioteca.crearPlaylist(nombre);
-                    Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Playlist creada",
-                            "La playlist '" + nombre + "' ha sido creada exitosamente.");
                     nuevaVentana.setScene(mainScene);
-                } else {
-                    Utiles.showAlert(Alert.AlertType.ERROR, "Error",
-                            "El nombre no puede estar vacío.");
-                }
+                } 
             });
 
             cancelButton.setOnAction(ev -> nuevaVentana.setScene(mainScene));
@@ -775,8 +686,6 @@ public class MenuPrincipal extends Application {
 
         añadirCancionesButton.setOnAction(e -> {
             if (biblioteca.playlist.isEmpty()) {
-                Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                        "No hay playlists disponibles. Crea una primero.");
                 return;
             }
 
@@ -824,8 +733,6 @@ public class MenuPrincipal extends Application {
                 ObservableList<String> selectedSongs = songsList.getSelectionModel().getSelectedItems();
 
                 if (selectedPlaylist == null || selectedSongs.isEmpty()) {
-                    Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                            "Debes seleccionar una playlist y al menos una canción.");
                     return;
                 }
 
@@ -872,7 +779,6 @@ public class MenuPrincipal extends Application {
                     }
 
                     if (mensajeFinal.length() > 0) {
-                        Utiles.showAlert(Alert.AlertType.INFORMATION, "Resultado", mensajeFinal.toString());
                     }
                 }
             });
@@ -890,8 +796,7 @@ public class MenuPrincipal extends Application {
 
         eliminarCancionesButton.setOnAction(e -> {
             if (biblioteca.playlist.isEmpty()) {
-                showAlert(Alert.AlertType.WARNING, "Advertencia",
-                        "No hay playlists disponibles.");
+             
                 return;
             }
 
@@ -949,8 +854,6 @@ public class MenuPrincipal extends Application {
                 String selectedSong = songsList.getSelectionModel().getSelectedItem();
 
                 if (selectedPlaylist == null || selectedSong == null) {
-                    showAlert(Alert.AlertType.WARNING, "Advertencia",
-                            "Debes seleccionar una playlist y una canción.");
                     return;
                 }
 
@@ -970,8 +873,6 @@ public class MenuPrincipal extends Application {
                     if (lista != null && lista.nombreDeCancion.remove(selectedSong)) {
                         biblioteca.playlist.guardarPlaylists();
                         songsList.setItems(FXCollections.observableArrayList(lista.nombreDeCancion));
-                        showAlert(Alert.AlertType.CONFIRMATION, "Éxito",
-                                "Canción eliminada de la playlist.");
                     }
                 }
             });
@@ -1040,8 +941,6 @@ public class MenuPrincipal extends Application {
 
         reproducirListaButton.setOnAction(e -> {
             if (biblioteca.playlist.isEmpty()) {
-                Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                        "No hay playlists disponibles.");
                 return;
             }
 
@@ -1098,8 +997,6 @@ public class MenuPrincipal extends Application {
                 String selectedSongName = songsList.getSelectionModel().getSelectedItem();
 
                 if (selectedPlaylistName == null) {
-                    Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                            "Debes seleccionar una playlist.");
                     return;
                 }
 
@@ -1110,8 +1007,6 @@ public class MenuPrincipal extends Application {
 
                 if (selectedPlaylist != null) {
                     if (selectedPlaylist.nombreDeCancion.isEmpty()) {
-                        Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                                "Esta playlist está vacía.");
                         return;
                     }
 
@@ -1137,13 +1032,9 @@ public class MenuPrincipal extends Application {
                         reproductor.setListaActual(cancionesPlaylist);
                         reproductor.setCancionActual(startIndex);
                         nuevaVentana.close();
-                        Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Reproduciendo",
-                                "Playlist '" + selectedPlaylistName + "' en reproducción, empezando con '"
-                                        + cancionesPlaylist.get(startIndex).getName() + "'.");
-                    } else {
-                        Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                                "No se encontraron las canciones de la playlist.");
-                    }
+                     
+                    } 
+                    
                 }
             });
 
@@ -1160,8 +1051,6 @@ public class MenuPrincipal extends Application {
 
         editarListaButton.setOnAction(e -> {
             if (biblioteca.playlist.isEmpty()) {
-                Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                        "No hay playlists disponibles.");
                 return;
             }
 
@@ -1204,23 +1093,18 @@ public class MenuPrincipal extends Application {
                 String newName = newNameField.getText().trim();
 
                 if (selectedPlaylist == null || newName.isEmpty()) {
-                    Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                            "Debes seleccionar una playlist y proporcionar un nuevo nombre.");
+
                     return;
                 }
 
                 if (newName.equals(selectedPlaylist)) {
-                    Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                            "El nuevo nombre es igual al actual.");
                     return;
                 }
 
                 boolean nameExists = biblioteca.playlist.getPlaylists().stream()
                         .anyMatch(p -> p.nombre.equalsIgnoreCase(newName));
 
-                if (nameExists) {
-                    Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                            "Ya existe una playlist con ese nombre.");
+                if (nameExists) {                
                     return;
                 }
 
@@ -1240,8 +1124,7 @@ public class MenuPrincipal extends Application {
                                     .toList()));
                     playlistCombo.setValue(newName);
 
-                    Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Éxito",
-                            "Playlist '" + oldName + "' renombrada a '" + newName + "'.");
+                
                     newNameField.clear();
                 }
             });
@@ -1259,8 +1142,7 @@ public class MenuPrincipal extends Application {
 
         eliminarListaButton.setOnAction(e -> {
             if (biblioteca.playlist.isEmpty()) {
-                Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                        "No hay playlists disponibles.");
+                
                 return;
             }
 
@@ -1295,8 +1177,6 @@ public class MenuPrincipal extends Application {
                 String selectedPlaylist = playlistCombo.getValue();
 
                 if (selectedPlaylist == null) {
-                    Utiles.showAlert(Alert.AlertType.WARNING, "Advertencia",
-                            "Debes seleccionar una playlist.");
                     return;
                 }
 
@@ -1320,8 +1200,6 @@ public class MenuPrincipal extends Application {
                                         .toList()));
                         playlistCombo.setValue(null);
 
-                        Utiles.showAlert(Alert.AlertType.CONFIRMATION, "Éxito",
-                                "Playlist '" + selectedPlaylist + "' eliminada.");
                     }
                 }
             });
@@ -1420,286 +1298,4 @@ public class MenuPrincipal extends Application {
         }
     }
 
-    public void mostrarMenu() {
-        Utiles.clearConsole();
-        int opcion;
-        do {
-            Utiles.clearConsole();
-            Prints.printMenuPrincipal();
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-            switch (opcion) {
-                case 1:
-                    menuReproducir();
-                    break;
-                case 2:
-                    menuBiblioteca();
-                    break;
-                case 3:
-                    menuBuscar();
-                    break;
-                case 4:
-                    menuListasReproduccion();
-                    break;
-                case 5:
-                    System.out.println("Saliendo del reproductor...");
-                    Platform.exit();
-                    break;
-                default:
-                    System.out.println("Opción inválida. Intente de nuevo.");
-            }
-        } while (opcion != 5);
-    }
-
-    private void menuReproducir() {
-        int opcion;
-        do {
-            Utiles.clearConsole();
-            Prints.printMenuReproducir();
-            opcion = scanner.nextInt();
-            switch (opcion) {
-                case 1:
-                    Platform.runLater(() -> {
-                        reproductor.playPause();
-                    });
-                    break;
-                case 2:
-                    Platform.runLater(() -> {
-                        reproductor.playNext();
-                    });
-                    break;
-                case 3:
-                    Platform.runLater(() -> {
-                        reproductor.playPrevious();
-                    });
-                    break;
-                case 4:
-                    Platform.runLater(() -> {
-                        reproductor.playRandom();
-                    });
-                    break;
-                case 5:
-                    Platform.runLater(() -> {
-                        reproductor.playOnRepeat();
-                    });
-                    break;
-                case 6:
-                    colaDeReproduccion.mostrarCola();
-                    break;
-                case 7:
-                    break;
-                default:
-                    System.out.println("Opción inválida.");
-            }
-        } while (opcion != 7);
-    }
-
-    private void menuBiblioteca() {
-        int opcion;
-        do {
-            Prints.printMenuBiblioteca();
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-            switch (opcion) {
-                case 1:
-                    Prints.printVerBiblioteca();
-                    int tipoDeLista = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (tipoDeLista) {
-                        case 1:
-                            biblioteca.limpiarListaTemporal();
-                            biblioteca.mostrarListaActual();
-                            break;
-                        case 2:
-                            biblioteca.mostrarPorTitulo();
-                            break;
-                        case 3:
-                            biblioteca.mostrarPorArtista();
-                            break;
-                        case 4:
-                            biblioteca.mostrarPorGenero();
-                            break;
-                        default:
-                            System.out.println("Opción inválida.");
-                            continue;
-                    }
-                    List<File> listaActual = biblioteca.getListaTemporal().isEmpty()
-                            ? biblioteca.getListaCanciones()
-                            : biblioteca.getListaTemporal();
-                    for (int i = 0; i < listaActual.size(); i++) {
-                        System.out.printf("%d. %s%n", i + 1, listaActual.get(i).getName());
-                    }
-                    System.out.println("Selecciona una canción por su número:");
-                    int seleccion = scanner.nextInt();
-                    scanner.nextLine();
-                    if (seleccion > 0 && seleccion <= listaActual.size()) {
-                        File cancionSeleccionada = listaActual.get(seleccion - 1);
-                        int index = -1;
-                        for (int i = 0; i < biblioteca.getListaCanciones().size(); i++) {
-                            File original = biblioteca.getListaCanciones().get(i);
-                            if (original.getName().equals(cancionSeleccionada.getName())) {
-                                index = i;
-                                break;
-                            }
-                        }
-                        if (index != -1) {
-                            MediaPlayer mp = reproductor.getMediaPlayer();
-                            if (mp != null) {
-                                mp.stop();
-                            }
-                            reproductor.setCancionActual(index);
-                            System.out.println("Reproduciendo: " + cancionSeleccionada.getName());
-                        } else {
-                            System.out.println("No se encontró la canción en la lista original.");
-                        }
-                    } else {
-                        System.out.println("Selección inválida.");
-                    }
-                    break;
-                case 2:
-                    Prints.printSeleccionadorDeArchivos();
-                    int tip = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (tip) {
-                        case 1:
-                            Platform.runLater(() -> {
-                                biblioteca.agregarCanciones(new Stage());
-                                biblioteca.guardarListaCancionesJson("lista_canciones.json");
-                            });
-                            break;
-                        case 2:
-                            Platform.runLater(() -> {
-                                biblioteca.agregarCancionDeCarpeta(new Stage());
-                                biblioteca.guardarListaCancionesJson("lista_canciones.json");
-                            });
-                            break;
-                        default:
-                            System.out.println("Opción inválida.");
-                    }
-                    break;
-                case 3:
-                    List<File> canciones = biblioteca.getListaCanciones();
-                    for (int i = 0; i < canciones.size(); i++) {
-                        System.out.println(i + ": " + canciones.get(i).getName());
-                    }
-                    System.out.print("Ingresa el número de la canción que deseas eliminar: ");
-                    int indice = scanner.nextInt();
-                    scanner.nextLine();
-                    biblioteca.eliminarCancion(indice);
-                    biblioteca.guardarListaCancionesJson("lista_canciones.json");
-                    break;
-                case 4:
-                    List<File> cancion = biblioteca.getListaCanciones();
-                    for (int i = 0; i < cancion.size(); i++) {
-                        System.out.println(i + ": " + cancion.get(i).getName());
-                    }
-                    break;
-                case 5:
-                    break;
-                default:
-                    System.out.println("Opción inválida.");
-            }
-        } while (opcion != 5);
-    }
-
-    private void menuBuscar() {
-        BuscarCancion buscarcancion = new BuscarCancion(biblioteca, reproductor);
-        System.out.println("\n Menú Buscar");
-        buscarcancion.mostrarHistorial();
-        System.out.print("Ingrese el título, artista, género o álbum de la canción: ");
-        String query = scanner.nextLine().trim().toLowerCase();
-        if (query.isEmpty()) {
-            System.out.println("Búsqueda vacía. Intente nuevamente.");
-            menuBuscar();
-            return;
-        }
-        buscarcancion.agregarHistorial(query);
-        List<File> resultados = buscarcancion.buscarMetadatos(query);
-        buscarcancion.mostrarResultados(resultados, scanner);
-    }
-
-    public void menuListasReproduccion() {
-        List<ListaDeReproduccion> listasDeReproduccion = new ArrayList<>();
-        ListaDeReproduccion listaSeleccionada = null;
-        int opcion;
-        do {
-            Utiles.clearConsole();
-            System.out.println("Gestión de Listas de Reproducción:");
-            System.out.println("1. Crear nueva lista");
-            System.out.println("2. Agregar canciones a una lista");
-            System.out.println("3. Eliminar canciones de una lista");
-            System.out.println("4. Mostrar listas");
-            System.out.println("5. Reproducir lista");
-            System.out.println("6. Editar lista de Reproducción");
-            System.out.println("7. Eliminar lista de Reproducción");
-            System.out.println("8. Volver al menú principal");
-            System.out.print("Elige una opción: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-            switch (opcion) {
-                case 1 -> {
-                    System.out.print("Introduce el nombre de la nueva lista: ");
-                    String nombreLista = scanner.nextLine();
-                    biblioteca.crearPlaylist(nombreLista);
-                }
-                case 2 -> {
-                    biblioteca.agregarCancionAPlaylist();
-                }
-                case 3 -> {
-                    biblioteca.eliminarCancionDePlaylist();
-                }
-                case 4 -> {
-                    biblioteca.mostrarPlaylistsDesdeBiblioteca();
-                }
-                case 5 -> {
-                    biblioteca.mostrarPlaylists();
-                    List<File> listaActual = biblioteca.getListaTemporal().isEmpty()
-                            ? biblioteca.getListaCanciones()
-                            : biblioteca.getListaTemporal();
-                    for (int i = 0; i < listaActual.size(); i++) {
-                        System.out.printf("%d. %s%n", i + 1, listaActual.get(i).getName());
-                    }
-                    System.out.println("Selecciona una canción por su número:");
-                    int seleccion = scanner.nextInt();
-                    scanner.nextLine();
-                    if (seleccion > 0 && seleccion <= listaActual.size()) {
-                        File cancionSeleccionada = listaActual.get(seleccion - 1);
-                        int index = -1;
-                        for (int i = 0; i < biblioteca.getListaCanciones().size(); i++) {
-                            File original = biblioteca.getListaCanciones().get(i);
-                            if (original.getName().equals(cancionSeleccionada.getName())) {
-                                index = i;
-                                break;
-                            }
-                        }
-                        if (index != -1) {
-                            MediaPlayer mp = reproductor.getMediaPlayer();
-                            if (mp != null) {
-                                mp.stop();
-                            }
-                            reproductor.setCancionActual(index);
-                        } else {
-                            System.out.println("La canción seleccionada no fue encontrada en la lista original.");
-                        }
-                    } else {
-                        System.out.println("Selección inválida.");
-                    }
-                }
-                case 6 -> biblioteca.editarNombrePlaylist();
-                case 7 -> {
-                    biblioteca.mostrarPlaylistsConIndices();
-                    System.out.print("Introduce el número de la playlist a eliminar: ");
-                    if (scanner.hasNextInt()) {
-                        biblioteca.eliminarPlaylist(scanner.nextInt());
-                        scanner.nextLine();
-                    } else {
-                        System.out.println("Entrada inválida.");
-                        scanner.nextLine();
-                    }
-                }
-                case 8 -> System.out.println("Volviendo al menú principal...");
-                default -> System.out.println("Opción no válida. Intente de nuevo.");
-            }
-        } while (opcion != 8);
-    }
 }

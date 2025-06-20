@@ -3,7 +3,6 @@ package com.jdkk.musicplayer.model;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.Tag;
-import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.audio.exceptions.*;
 import org.jaudiotagger.tag.TagException;
 
@@ -11,10 +10,7 @@ import java.io.IOException;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ListaDeReproduccion {
 
@@ -44,7 +40,7 @@ public class ListaDeReproduccion {
                 System.err.println("Error: El archivo tiene un frame de audio inválido.");
             }
         }
-        return null; // Retorna null si hay un error o si el archivo no es válido.
+        return null; 
     }
     public ListaDeReproduccion(String nombre) {
         this.nombre = nombre;
