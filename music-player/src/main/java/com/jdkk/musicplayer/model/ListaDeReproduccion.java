@@ -44,7 +44,7 @@ public class ListaDeReproduccion {
                 System.err.println("Error: El archivo tiene un frame de audio inválido.");
             }
         }
-        return null; // Retorna null si hay un error o si el archivo no es válido.
+        return null; 
     }
     public ListaDeReproduccion(String nombre) {
         this.nombre = nombre;
