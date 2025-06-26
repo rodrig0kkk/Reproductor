@@ -53,12 +53,12 @@ public class Playlist {
         }
     }
 
-    // Getter para la lista de playlists
+  
     public List<Lista> getPlaylists() {
         return playlists;
     }
 
-    // Cargar las playlists desde el archivo JSON
+
     private List<Lista> cargarPlaylists() {
         File archivo = new File(PLAYLISTS_FILE);
         if (!archivo.exists()) {
@@ -76,7 +76,7 @@ public class Playlist {
         }
     }
 
-    // Guardar las playlists en el archivo JSON
+
     public void guardarPlaylists() {
         Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
         try (Writer writer = new FileWriter(PLAYLISTS_FILE)) {
