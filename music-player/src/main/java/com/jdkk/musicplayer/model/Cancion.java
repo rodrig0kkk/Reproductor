@@ -156,10 +156,10 @@ public class Cancion {
         for (int i = 0; i < musicFiles.size(); i++) {
             String fileName = musicFiles.get(i).getName().toLowerCase();
             if (fileName.contains(query.toLowerCase())) {
-                return i; // Devuelve el índice de la canción encontrada
+                return i; 
             }
         }
-        return -1; // Retorna -1 si no se encuentra la canción
+        return -1; 
     }
 
     public boolean playPause() {
