@@ -88,8 +88,6 @@ public class MenuPrincipal extends Application {
         try {
             System.out.println("Iniciando la interfaz...");
             primaryStage.setTitle("Softcorp Music Player");
-            Image icon = new Image(getClass().getResourceAsStream("/images/icono.png"));
-            primaryStage.getIcons().add(icon);
 
             Slider timelineSlider = new Slider();
             timelineSlider.setMin(0);
