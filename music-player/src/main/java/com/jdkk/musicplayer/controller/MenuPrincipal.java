@@ -1255,7 +1255,7 @@ public class MenuPrincipal extends Application {
             indicesMap.put(index++, -1);
 
             for (File cancion : entry.getValue()) {
-                String nombre = "    " + cancion.getName();
+                String nombre = "    " + formatearNombreCancion(cancion.getName());
                 if (!cancionesObservableList.contains(nombre)) {
                     cancionesObservableList.add(nombre);
                     indicesMap.put(index++, biblioteca.getListaCanciones().indexOf(cancion));
@@ -1277,7 +1277,7 @@ public class MenuPrincipal extends Application {
             indicesMap.put(index++, -1);
 
             for (File cancion : entry.getValue()) {
-                String nombre = "    " + cancion.getName();
+                String nombre = "    " + formatearNombreCancion(cancion.getName());
                 if (!cancionesObservableList.contains(nombre)) {
                     cancionesObservableList.add(nombre);
                     indicesMap.put(index++, biblioteca.getListaCanciones().indexOf(cancion));
@@ -1292,11 +1292,20 @@ public class MenuPrincipal extends Application {
         indicesMap.clear();
         int index = 0;
         for (File cancion : biblioteca.getListaCanciones()) {
-            if (!cancionesObservableList.contains(cancion.getName())) {
-                cancionesObservableList.add(cancion.getName());
+            if (!cancionesObservableList.contains(formatearNombreCancion(cancion.getName()))) {
+                cancionesObservableList.add(formatearNombreCancion(cancion.getName()));
                 indicesMap.put(index++, biblioteca.getListaCanciones().indexOf(cancion));
             }
         }
     }
+
+    private String formatearNombreCancion(String nombreArchivo) {
+  
+    if (nombreArchivo.endsWith(".mp3")) {
+        nombreArchivo = nombreArchivo.substring(0, nombreArchivo.length() - 4);
+    }
+    nombreArchivo = nombreArchivo.replace("_", " ").replace("-", " "); 
+    return nombreArchivo.trim();
+   }
 
 }
