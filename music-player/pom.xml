@@ -10,7 +10,7 @@
         </repository>
     </repositories>
 
-    <groupId>com.softcorp</groupId>
+    <groupId>com.jdkk</groupId>
     <artifactId>MusicPlayer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -103,7 +103,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.softcorp.musicplayer.Main</mainClass>
+                            <mainClass>com.jdkk.musicplayer.Main</mainClass>
                             <jvmArgs>
                                 <jvmArg>--enable-native-access=ALL-UNNAMED</jvmArg>
                             </jvmArgs>
@@ -118,7 +118,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.softcorp.musicplayer.Main</mainClass>
+                            <mainClass>com.jdkk.musicplayer.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -130,7 +130,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.softcorp.musicplayer.Main</mainClass>
+                            <mainClass>com.jdkk.musicplayer.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

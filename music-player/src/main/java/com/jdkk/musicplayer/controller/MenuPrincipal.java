@@ -87,7 +87,7 @@ public class MenuPrincipal extends Application {
     public void start(Stage primaryStage) {
         try {
             System.out.println("Iniciando la interfaz...");
-            primaryStage.setTitle("Softcorp Music Player");
+            primaryStage.setTitle("Music Player");
 
             Slider timelineSlider = new Slider();
             timelineSlider.setMin(0);
